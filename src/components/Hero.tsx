@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { HeroCanvas } from './HeroCanvas';
+import { DashboardMockup } from './DashboardMockup';
 
 const MagneticButton = ({ children, className }: { children: React.ReactNode, className: string }) => {
   const ref = useRef<HTMLButtonElement>(null);
@@ -76,6 +77,8 @@ export const Hero = () => {
             Book a Demo
           </MagneticButton>
         </div>
+        
+        <DashboardMockup />
       </div>
       {/* Decorative SVG */}
       <svg className="absolute bottom-0 w-full h-auto text-arctic-powder fill-current" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">

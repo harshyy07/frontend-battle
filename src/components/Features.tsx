@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useSpotlight } from '../hooks/useSpotlight';
 
 const features = [
   { id: 1, title: 'AI Automation', desc: 'Self-learning algorithms that adapt to your workflows.' },
@@ -12,6 +13,7 @@ export const Features = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const revealRef = useScrollReveal<HTMLDivElement>(0.1);
+  const spotlightRef = useSpotlight<HTMLDivElement>();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile) return;
@@ -82,7 +84,7 @@ export const Features = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-4 grid-rows-2 gap-6 h-[500px]" role="list" aria-label="Feature highlight grid">
+          <div ref={spotlightRef} className="grid grid-cols-4 grid-rows-2 gap-6 h-[500px]" role="list" aria-label="Feature highlight grid">
             {features.map((feat, idx) => {
               let gridClass = '';
               let bgClass = 'bg-white';
@@ -114,7 +116,7 @@ export const Features = () => {
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                   onBlur={handleMouseLeave}
-                  className={`relative p-8 rounded-3xl overflow-hidden transition-all duration-200 ease-out focus:outline-none focus:ring-4 focus:ring-deep-saffron
+                  className={`spotlight-card relative p-8 rounded-3xl overflow-hidden transition-all duration-200 ease-out focus:outline-none focus:ring-4 focus:ring-deep-saffron
                     ${gridClass} ${bgClass} 
                     ${isActive && idx !== 0 ? 'ring-4 ring-deep-saffron ring-opacity-50 shadow-2xl z-10' : 'shadow-xl'}
                     ${isActive && idx === 0 ? 'shadow-2xl z-10 ring-4 ring-forsythia ring-opacity-50' : ''}

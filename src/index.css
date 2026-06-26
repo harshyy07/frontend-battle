@@ -11,6 +11,38 @@
   }
 }
 
+@layer utilities {
+  .cursor-none-global {
+    cursor: none !important;
+  }
+  .cursor-none-global * {
+    cursor: none !important;
+  }
+
+  .spotlight-card::before {
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity 500ms;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    );
+  }
+  
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+}
+
 /* Custom scrollbar for modern look */
 ::-webkit-scrollbar {
   width: 8px;

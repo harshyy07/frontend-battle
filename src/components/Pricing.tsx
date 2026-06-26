@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useSpotlight } from '../hooks/useSpotlight';
 
 type Currency = 'USD' | 'EUR' | 'INR';
 
@@ -19,6 +20,7 @@ export const Pricing = () => {
   const currencyRef = useRef<Currency>('USD');
   const isAnnualRef = useRef<boolean>(true);
   const revealRef = useScrollReveal<HTMLDivElement>(0.1);
+  const spotlightRef = useSpotlight<HTMLDivElement>();
   
   // Refs for specific DOM nodes
   const priceNodesRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -128,12 +130,12 @@ export const Pricing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8" role="list" aria-label="Pricing tiers">
+        <div ref={spotlightRef} className="grid grid-cols-1 md:grid-cols-3 gap-8" role="list" aria-label="Pricing tiers">
           {tiers.map((tier, idx) => (
             <div 
               key={tier.name}
               role="listitem"
-              className={`relative rounded-3xl p-8 transition-transform duration-200 ease-out transform hover:-translate-y-2 flex flex-col backdrop-blur-xl
+              className={`spotlight-card relative rounded-3xl p-8 transition-transform duration-200 ease-out transform hover:-translate-y-2 flex flex-col backdrop-blur-xl
                 ${tier.isPopular ? 'bg-nocturnal-expedition/80 border-2 border-forsythia shadow-[0_0_40px_rgba(255,200,1,0.2)] scale-105 z-10' : 'bg-white/5 border border-white/10 text-arctic-powder shadow-2xl'}`}
             >
               {tier.isPopular && (
