@@ -1,6 +1,61 @@
+import { useState, useEffect, useRef } from 'react';
 import { HeroCanvas } from './HeroCanvas';
 
+const MagneticButton = ({ children, className }: { children: React.ReactNode, className: string }) => {
+  const ref = useRef<HTMLButtonElement>(null);
+  
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const btn = ref.current;
+    if (!btn) return;
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  };
+  
+  const handleMouseLeave = () => {
+    const btn = ref.current;
+    if (!btn) return;
+    btn.style.transform = `translate(0px, 0px)`;
+  };
+
+  return (
+    <button
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`${className}`}
+      style={{ transition: 'transform 0.15s ease-out' }}
+    >
+      {children}
+    </button>
+  );
+};
+
 export const Hero = () => {
+  const [typedText, setTypedText] = useState('');
+  const fullText = "The most advanced AI-driven platform for connecting, synchronizing, and optimizing your operational data.";
+  
+  useEffect(() => {
+    let currentText = '';
+    let currentIndex = 0;
+    
+    // Target ~400ms for full typing effect to meet 500ms initial load constraints
+    const intervalTime = 400 / fullText.length;
+    
+    const interval = setInterval(() => {
+      if (currentIndex < fullText.length) {
+        currentText += fullText[currentIndex];
+        setTypedText(currentText);
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, intervalTime);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <header className="relative w-full min-h-screen flex items-center justify-center bg-oceanic-noir overflow-hidden">
       <HeroCanvas />
@@ -9,16 +64,17 @@ export const Hero = () => {
         <h1 className="text-5xl md:text-7xl font-bold text-forsythia mb-6 animate-fade-in-up">
           Automate Data. <br/> <span className="text-arctic-powder">Scale Faster.</span>
         </h1>
-        <p className="text-xl md:text-2xl text-mystic-mint max-w-2xl mx-auto mb-10 font-sans leading-relaxed">
-          The most advanced AI-driven platform for connecting, synchronizing, and optimizing your operational data.
+        <p className="text-xl md:text-2xl text-mystic-mint max-w-2xl mx-auto mb-10 font-sans leading-relaxed min-h-[64px]">
+          {typedText}
+          <span className="inline-block w-[2px] h-6 bg-mystic-mint ml-1 animate-pulse align-middle"></span>
         </p>
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-          <button className="bg-deep-saffron hover:bg-forsythia text-oceanic-noir font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl text-lg">
+          <MagneticButton className="bg-deep-saffron hover:bg-forsythia text-oceanic-noir font-bold py-4 px-10 rounded-full shadow-xl text-lg hover:shadow-[0_0_20px_rgba(255,200,1,0.4)]">
             Start Free Trial
-          </button>
-          <button className="bg-transparent border-2 border-mystic-mint text-mystic-mint hover:bg-mystic-mint hover:text-oceanic-noir font-bold py-4 px-10 rounded-full transition-all duration-300 text-lg">
+          </MagneticButton>
+          <MagneticButton className="bg-transparent border-2 border-mystic-mint text-mystic-mint hover:bg-mystic-mint hover:text-oceanic-noir font-bold py-4 px-10 rounded-full text-lg">
             Book a Demo
-          </button>
+          </MagneticButton>
         </div>
       </div>
       {/* Decorative SVG */}

@@ -2,17 +2,20 @@
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { Pricing } from './components/Pricing';
+import { Footer } from './components/Footer';
+import { ScrollProgress } from './components/ScrollProgress';
 
 function App() {
   return (
-    <main className="font-sans min-h-screen bg-arctic-powder">
-      <Hero />
-      <Features />
-      <Pricing />
-      <footer className="py-10 bg-oceanic-noir text-center text-mystic-mint border-t border-nocturnal-expedition">
-        <p className="font-mono text-sm opacity-80">&copy; {new Date().getFullYear()} AI Automation Platform. Built for the Hackathon.</p>
-      </footer>
-    </main>
+    <div className="font-sans text-arctic-powder bg-oceanic-noir min-h-screen selection:bg-forsythia selection:text-oceanic-noir">
+      <ScrollProgress />
+      <main>
+        <Hero />
+        <Features />
+        <Pricing />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
