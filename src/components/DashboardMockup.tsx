@@ -1,7 +1,36 @@
+import { useState, useEffect } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const DashboardMockup = () => {
   const revealRef = useScrollReveal<HTMLDivElement>(0.2);
+  const [chartData, setChartData] = useState([40, 70, 45, 90, 60, 100, 80, 50, 75]);
+  const [latency, setLatency] = useState(12);
+  const [activeNodes, setActiveNodes] = useState(4289);
+  const [errorRate, setErrorRate] = useState("0.001");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Randomize chart bars slightly
+      setChartData(prev => prev.map(val => {
+        const change = (Math.random() - 0.5) * 20;
+        const newVal = val + change;
+        return Math.max(20, Math.min(100, newVal));
+      }));
+
+      // Fluctuate metrics
+      setLatency(prev => Math.max(8, Math.min(25, prev + Math.floor((Math.random() - 0.5) * 4))));
+      setActiveNodes(prev => prev + Math.floor((Math.random() - 0.5) * 10));
+      
+      // Error rate spikes very rarely
+      if (Math.random() > 0.95) {
+        setErrorRate((Math.random() * 0.005).toFixed(3));
+      } else {
+        setErrorRate("0.001");
+      }
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div ref={revealRef} className="relative w-full max-w-5xl mx-auto mt-20 perspective-1000 opacity-0 translate-y-12 transition-all duration-500 ease-out z-10 hidden md:block">
@@ -32,7 +61,7 @@ export const DashboardMockup = () => {
             <div className="h-4 w-3/4 bg-white/5 rounded"></div>
             <div className="h-4 w-2/3 bg-white/5 rounded"></div>
             <div className="h-4 w-5/6 bg-white/5 rounded"></div>
-            <div className="h-20 w-full bg-forsythia/10 border border-forsythia/20 rounded-xl mt-8 flex items-center justify-center">
+            <div className="h-20 w-full bg-forsythia/10 border border-forsythia/20 rounded-xl mt-8 flex items-center justify-center transition-colors duration-300">
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 rounded-full bg-forsythia animate-ping"></div>
                 <span className="text-xs text-forsythia font-mono">Syncing...</span>
@@ -44,25 +73,25 @@ export const DashboardMockup = () => {
           <div className="col-span-9 flex flex-col gap-6">
             <div className="flex justify-between items-end h-48 bg-white/5 rounded-xl border border-white/10 p-6 pb-0 overflow-hidden relative">
               <div className="absolute top-4 left-4 text-xs font-mono text-mystic-mint">Throughput (TB/s)</div>
-              {/* Fake Bar Chart */}
-              {[40, 70, 45, 90, 60, 100, 80, 50, 75].map((h, i) => (
-                <div key={i} className="w-8 bg-gradient-to-t from-deep-saffron to-forsythia rounded-t-sm" style={{ height: `${h}%` }}></div>
+              {/* Dynamic Bar Chart */}
+              {chartData.map((h, i) => (
+                <div key={i} className="w-8 bg-gradient-to-t from-deep-saffron to-forsythia rounded-t-sm transition-all duration-1000 ease-in-out" style={{ height: `${h}%` }}></div>
               ))}
             </div>
             
             {/* Bottom Metrics */}
             <div className="grid grid-cols-3 gap-6 flex-1">
-              <div className="bg-white/5 rounded-xl border border-white/10 p-4 flex flex-col justify-center">
+              <div className="bg-white/5 rounded-xl border border-white/10 p-4 flex flex-col justify-center transition-all duration-300 hover:bg-white/10">
                 <div className="text-xs text-mystic-mint font-mono mb-1">Latency</div>
-                <div className="text-2xl font-bold text-arctic-powder">12ms</div>
+                <div className="text-2xl font-bold text-arctic-powder">{latency}ms</div>
               </div>
-              <div className="bg-white/5 rounded-xl border border-white/10 p-4 flex flex-col justify-center">
+              <div className="bg-white/5 rounded-xl border border-white/10 p-4 flex flex-col justify-center transition-all duration-300 hover:bg-white/10">
                 <div className="text-xs text-mystic-mint font-mono mb-1">Active Nodes</div>
-                <div className="text-2xl font-bold text-arctic-powder">4,289</div>
+                <div className="text-2xl font-bold text-arctic-powder">{activeNodes.toLocaleString()}</div>
               </div>
-              <div className="bg-white/5 rounded-xl border border-white/10 p-4 flex flex-col justify-center">
+              <div className="bg-white/5 rounded-xl border border-white/10 p-4 flex flex-col justify-center transition-all duration-300 hover:bg-white/10">
                 <div className="text-xs text-mystic-mint font-mono mb-1">Error Rate</div>
-                <div className="text-2xl font-bold text-arctic-powder">0.001%</div>
+                <div className="text-2xl font-bold text-arctic-powder">{errorRate}%</div>
               </div>
             </div>
           </div>
