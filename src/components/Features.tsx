@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const features = [
   { id: 1, title: 'AI Automation', desc: 'Self-learning algorithms that adapt to your workflows.' },
@@ -10,6 +11,7 @@ const features = [
 export const Features = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const revealRef = useScrollReveal<HTMLDivElement>(0.1);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile) return;
@@ -43,19 +45,24 @@ export const Features = () => {
   }, []);
 
   return (
-    <section className="py-24 bg-arctic-powder text-oceanic-noir relative z-20">
-      <div className="container mx-auto px-6 max-w-6xl">
+    <section aria-label="Platform Features" className="py-24 bg-arctic-powder text-oceanic-noir relative z-20 overflow-hidden">
+      <div ref={revealRef} className="container mx-auto px-6 max-w-6xl opacity-0 translate-y-12 transition-all duration-700 ease-out">
         <h2 className="text-5xl font-bold text-center mb-16 text-nocturnal-expedition font-mono">Platform Features</h2>
         
         {isMobile ? (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4" role="tablist" aria-orientation="vertical">
             {features.map((feat, idx) => (
               <div 
                 key={feat.id} 
                 className={`rounded-2xl overflow-hidden transition-all duration-300 ease-in-out border-2 ${activeIndex === idx ? 'border-deep-saffron shadow-lg' : 'border-mystic-mint border-opacity-50 bg-white'}`}
               >
                 <button 
-                  className="w-full px-6 py-5 text-left font-bold text-xl flex justify-between items-center bg-white"
+                  role="tab"
+                  aria-selected={activeIndex === idx}
+                  aria-expanded={activeIndex === idx}
+                  aria-controls={`panel-${feat.id}`}
+                  id={`tab-${feat.id}`}
+                  className="w-full px-6 py-5 text-left font-bold text-xl flex justify-between items-center bg-white focus:outline-none focus:ring-4 focus:ring-deep-saffron"
                   onClick={() => setActiveIndex(activeIndex === idx ? -1 : idx)}
                 >
                   <span className="font-mono">{feat.title}</span>
@@ -64,6 +71,9 @@ export const Features = () => {
                   </span>
                 </button>
                 <div 
+                  id={`panel-${feat.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${feat.id}`}
                   className={`bg-white px-6 overflow-hidden transition-all duration-300 ease-in-out ${activeIndex === idx ? 'max-h-40 pb-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}
                 >
                   <p className="text-nocturnal-expedition leading-relaxed">{feat.desc}</p>
@@ -72,7 +82,7 @@ export const Features = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-4 grid-rows-2 gap-6 h-[500px]">
+          <div className="grid grid-cols-4 grid-rows-2 gap-6 h-[500px]" role="list" aria-label="Feature highlight grid">
             {features.map((feat, idx) => {
               let gridClass = '';
               let bgClass = 'bg-white';
@@ -95,10 +105,16 @@ export const Features = () => {
               return (
                 <div 
                   key={feat.id}
+                  role="listitem"
+                  tabIndex={0}
+                  aria-labelledby={`bento-title-${feat.id}`}
+                  aria-describedby={`bento-desc-${feat.id}`}
                   onMouseEnter={() => setActiveIndex(idx)}
+                  onFocus={() => setActiveIndex(idx)}
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
-                  className={`relative p-8 rounded-3xl overflow-hidden transition-all duration-200 ease-out 
+                  onBlur={handleMouseLeave}
+                  className={`relative p-8 rounded-3xl overflow-hidden transition-all duration-200 ease-out focus:outline-none focus:ring-4 focus:ring-deep-saffron
                     ${gridClass} ${bgClass} 
                     ${isActive && idx !== 0 ? 'ring-4 ring-deep-saffron ring-opacity-50 shadow-2xl z-10' : 'shadow-xl'}
                     ${isActive && idx === 0 ? 'shadow-2xl z-10 ring-4 ring-forsythia ring-opacity-50' : ''}
@@ -106,8 +122,8 @@ export const Features = () => {
                   style={{ transition: 'transform 0.1s ease-out, box-shadow 0.2s ease-out' }}
                 >
                   <div className={`absolute -bottom-16 -right-16 w-48 h-48 rounded-full opacity-20 transition-all duration-300 ease-in-out ${isActive ? 'scale-150' : 'scale-100'} ${idx === 0 ? 'bg-forsythia' : 'bg-deep-saffron'}`}></div>
-                  <h3 className={`text-3xl font-bold mb-4 font-mono ${titleClass}`}>{feat.title}</h3>
-                  <p className={`text-lg leading-relaxed ${textClass}`}>{feat.desc}</p>
+                  <h3 id={`bento-title-${feat.id}`} className={`text-3xl font-bold mb-4 font-mono ${titleClass}`}>{feat.title}</h3>
+                  <p id={`bento-desc-${feat.id}`} className={`text-lg leading-relaxed ${textClass}`}>{feat.desc}</p>
                 </div>
               );
             })}

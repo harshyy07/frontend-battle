@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 type Currency = 'USD' | 'EUR' | 'INR';
 
@@ -17,6 +18,7 @@ const tiers = [
 export const Pricing = () => {
   const currencyRef = useRef<Currency>('USD');
   const isAnnualRef = useRef<boolean>(true);
+  const revealRef = useScrollReveal<HTMLDivElement>(0.1);
   
   // Refs for specific DOM nodes
   const priceNodesRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -87,8 +89,8 @@ export const Pricing = () => {
   }, []);
 
   return (
-    <section id="pricing" className="py-24 bg-oceanic-noir text-arctic-powder">
-      <div className="container mx-auto px-6 max-w-7xl">
+    <section id="pricing" aria-label="Pricing Plans" className="py-24 bg-oceanic-noir text-arctic-powder">
+      <div ref={revealRef} className="container mx-auto px-6 max-w-7xl opacity-0 translate-y-12 transition-all duration-700 ease-out">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-6 font-mono text-forsythia">Transparent Pricing</h2>
           <p className="text-xl text-mystic-mint mb-10 max-w-2xl mx-auto">
@@ -100,6 +102,7 @@ export const Pricing = () => {
               {(Object.keys(currencyConfig) as Currency[]).map((cur) => (
                 <button
                   key={cur}
+                  aria-label={`Select ${cur} currency`}
                   ref={(el) => { currencyBtnRefs.current[cur] = el; }}
                   onClick={() => setCurrency(cur)}
                   className="px-6 py-2 rounded-lg font-bold transition-colors duration-200 ease-out text-mystic-mint hover:text-arctic-powder"
@@ -113,7 +116,8 @@ export const Pricing = () => {
               <span ref={monthlyLabelRef} className="font-bold text-mystic-mint transition-colors duration-200 ease-out">Monthly</span>
               <button 
                 onClick={toggleBilling}
-                className="relative inline-flex h-8 w-16 items-center rounded-full bg-nocturnal-expedition transition-colors focus:outline-none"
+                aria-label="Toggle annual billing"
+                className="relative inline-flex h-8 w-16 items-center rounded-full bg-nocturnal-expedition transition-colors focus:outline-none focus:ring-4 focus:ring-forsythia"
               >
                 <span ref={toggleBtnRef} className="inline-block h-6 w-6 transform rounded-full bg-deep-saffron transition-transform duration-200 ease-out translate-x-9" />
               </button>
@@ -124,10 +128,11 @@ export const Pricing = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8" role="list" aria-label="Pricing tiers">
           {tiers.map((tier, idx) => (
             <div 
               key={tier.name}
+              role="listitem"
               className={`relative rounded-3xl p-8 transition-transform duration-200 ease-out transform hover:-translate-y-2 flex flex-col backdrop-blur-xl
                 ${tier.isPopular ? 'bg-nocturnal-expedition/80 border-2 border-forsythia shadow-[0_0_40px_rgba(255,200,1,0.2)] scale-105 z-10' : 'bg-white/5 border border-white/10 text-arctic-powder shadow-2xl'}`}
             >
@@ -156,7 +161,9 @@ export const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <button className={`w-full py-4 rounded-xl font-bold transition-colors duration-200 ease-out text-lg
+              <button 
+                aria-label={`Choose ${tier.name} plan`}
+                className={`w-full py-4 rounded-xl font-bold transition-colors duration-200 ease-out text-lg focus:outline-none focus:ring-4 focus:ring-arctic-powder
                 ${tier.isPopular ? 'bg-forsythia text-oceanic-noir hover:bg-deep-saffron' : 'bg-nocturnal-expedition text-arctic-powder hover:bg-oceanic-noir'}`}>
                 Choose {tier.name}
               </button>
