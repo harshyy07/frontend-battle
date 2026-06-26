@@ -43,16 +43,26 @@
   }
 }
 
-/* Custom scrollbar for modern look */
+/* Custom scrollbar for modern feel */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-oceanic-noir;
+  background: #0D1F2D; 
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-nocturnal-expedition rounded-full;
+  background: #D9E8E2; 
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-mystic-mint;
+  background: #FFC801; 
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+.animate-dash-flow {
+  animation: dash-flow 1s linear infinite;
 }
