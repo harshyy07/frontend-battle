@@ -4,7 +4,7 @@ export const DashboardMockup = () => {
   const revealRef = useScrollReveal<HTMLDivElement>(0.2);
 
   return (
-    <div ref={revealRef} className="relative w-full max-w-5xl mx-auto mt-20 perspective-1000 opacity-0 translate-y-12 transition-all duration-1000 ease-out z-10 hidden md:block">
+    <div ref={revealRef} className="relative w-full max-w-5xl mx-auto mt-20 perspective-1000 opacity-0 translate-y-12 transition-all duration-500 ease-out z-10 hidden md:block">
       {/* Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-forsythia opacity-10 blur-3xl rounded-full z-0 pointer-events-none mix-blend-screen"></div>
       

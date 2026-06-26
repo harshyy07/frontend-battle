@@ -4,7 +4,7 @@ export const Footer = () => {
   const revealRef = useScrollReveal<HTMLElement>(0.1);
 
   return (
-    <footer ref={revealRef} className="bg-oceanic-noir text-arctic-powder pt-20 pb-10 border-t border-mystic-mint/20 opacity-0 translate-y-12 transition-all duration-700 ease-out">
+    <footer ref={revealRef} className="bg-oceanic-noir text-arctic-powder pt-20 pb-10 border-t border-mystic-mint/20 opacity-0 translate-y-12 transition-all duration-500 ease-out">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">

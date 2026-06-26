@@ -19,7 +19,7 @@ export const DataPipeline = () => {
       ref={revealRef} 
       onMouseMove={handleMouseMove}
       aria-label="Data Pipeline Visualization" 
-      className="py-24 bg-nocturnal-expedition border-y border-oceanic-noir/50 relative overflow-hidden opacity-0 translate-y-12 transition-all duration-700 ease-out z-10"
+      className="py-24 bg-nocturnal-expedition border-y border-oceanic-noir/50 relative overflow-hidden opacity-0 translate-y-12 transition-all duration-500 ease-out z-10"
     >
       <div className="container mx-auto px-6 max-w-6xl relative z-10 pointer-events-none">
         <div className="text-center mb-16">
