@@ -30,33 +30,10 @@ export const DataPipeline = () => {
         <div className="relative w-full h-64 md:h-96 flex items-center justify-center mt-12 pointer-events-auto">
           {/* Main Pipeline SVG */}
           <svg className="absolute w-full h-full pointer-events-none" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <linearGradient id="fadeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="transparent" />
-                <stop offset="20%" stopColor="currentColor" />
-                <stop offset="80%" stopColor="currentColor" />
-                <stop offset="100%" stopColor="transparent" />
-              </linearGradient>
-              <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="transparent" />
-                <stop offset="50%" stopColor="currentColor" />
-                <stop offset="100%" stopColor="transparent" />
-              </linearGradient>
-            </defs>
-
-            {/* Core glowing backgrounds (static) */}
-            <path d="M 150 200 C 300 200, 300 100, 500 100 C 700 100, 700 200, 850 200" fill="none" stroke="url(#fadeGradient)" className="text-forsythia/10" strokeWidth="12" strokeLinecap="round" />
-            <path d="M 150 200 C 300 200, 300 300, 500 300 C 700 300, 700 200, 850 200" fill="none" stroke="url(#fadeGradient)" className="text-deep-saffron/10" strokeWidth="12" strokeLinecap="round" />
-            <path d="M 150 200 L 850 200" fill="none" stroke="url(#fadeGradient)" className="text-mystic-mint/10" strokeWidth="6" />
-
-            {/* High-speed data streams (fast, small dashes) */}
-            <path className="animate-dash-flow text-forsythia/80 drop-shadow-[0_0_8px_rgba(255,200,1,0.8)]" stroke="url(#fadeGradient)" d="M 150 200 C 300 200, 300 100, 500 100 C 700 100, 700 200, 850 200" fill="none" strokeWidth="2" strokeLinecap="round" strokeDasharray="5 30" style={{ animationDuration: '0.8s' }} />
-            <path className="animate-dash-flow text-deep-saffron/80 drop-shadow-[0_0_8px_rgba(255,153,50,0.8)]" stroke="url(#fadeGradient)" d="M 150 200 C 300 200, 300 300, 500 300 C 700 300, 700 200, 850 200" fill="none" strokeWidth="2" strokeLinecap="round" strokeDasharray="5 30" style={{ animationDuration: '0.6s' }} />
-            <path className="animate-dash-flow text-mystic-mint/80 drop-shadow-[0_0_5px_rgba(217,232,226,0.6)]" stroke="url(#fadeGradient)" d="M 150 200 L 850 200" fill="none" strokeWidth="1" strokeDasharray="3 20" style={{ animationDuration: '0.5s' }} />
-
-            {/* Thick data packets (slower, large dashes) */}
-            <path className="animate-dash-flow text-forsythia/50 drop-shadow-[0_0_12px_rgba(255,200,1,0.6)]" stroke="url(#fadeGradient)" d="M 150 200 C 300 200, 300 100, 500 100 C 700 100, 700 200, 850 200" fill="none" strokeWidth="6" strokeLinecap="round" strokeDasharray="40 120" style={{ animationDuration: '2s' }} />
-            <path className="animate-dash-flow text-deep-saffron/50 drop-shadow-[0_0_12px_rgba(255,153,50,0.6)]" stroke="url(#fadeGradient)" d="M 150 200 C 300 200, 300 300, 500 300 C 700 300, 700 200, 850 200" fill="none" strokeWidth="6" strokeLinecap="round" strokeDasharray="40 120" style={{ animationDuration: '2.5s' }} />
+            {/* Background glowing paths with flow animation */}
+            <path id="path1" className="animate-dash-flow text-forsythia/60 drop-shadow-[0_0_8px_rgba(255,200,1,0.5)]" d="M 100 200 C 300 200, 300 100, 500 100 C 700 100, 700 200, 900 200" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeDasharray="15 15" />
+            <path id="path2" className="animate-dash-flow text-deep-saffron/60 drop-shadow-[0_0_8px_rgba(255,153,50,0.5)]" d="M 100 200 C 300 200, 300 300, 500 300 C 700 300, 700 200, 900 200" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeDasharray="15 15" style={{ animationDirection: 'reverse' }} />
+            <path id="path3" className="animate-dash-flow text-mystic-mint/40 drop-shadow-[0_0_5px_rgba(217,232,226,0.3)]" d="M 100 200 L 900 200" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="5 10" />
           </svg>
 
           {/* Nodes placed over SVG with Parallax and Hover Effects */}
