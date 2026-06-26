@@ -58,10 +58,10 @@ export const Hero = () => {
   }, []);
 
   return (
-    <header className="relative w-full min-h-screen flex items-center justify-center bg-oceanic-noir overflow-hidden">
+    <header className="relative w-full min-h-screen flex flex-col items-center justify-center bg-oceanic-noir overflow-hidden pt-24 pb-12">
       <HeroCanvas />
       <div className="absolute inset-0 bg-gradient-to-br from-nocturnal-expedition/80 to-transparent opacity-60 pointer-events-none z-0"></div>
-      <div className="relative z-10 container mx-auto px-6 text-center">
+      <div className="relative z-10 container mx-auto px-6 text-center mt-12 md:mt-24">
         <h1 className="text-5xl md:text-7xl font-bold text-forsythia mb-6 animate-fade-in-up">
           Automate Data. <br/> <span className="text-arctic-powder">Scale Faster.</span>
         </h1>
