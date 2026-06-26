@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-oceanic-noir text-arctic-powder font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-mono;
+  }
+}
+
+/* Custom scrollbar for modern look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-oceanic-noir;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-nocturnal-expedition rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-mystic-mint;
+}

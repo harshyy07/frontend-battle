@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="description" content="The most advanced AI-driven platform for connecting and synchronizing your operational data. Scale faster with our next-gen data automation." />
+    <meta name="keywords" content="AI, Automation, Data Sync, SaaS, Enterprise" />
+    <meta name="author" content="Frontend Battle Competitor" />
+    
+    <meta property="og:title" content="AI Automation Platform" />
+    <meta property="og:description" content="The most advanced AI-driven platform for connecting and synchronizing your operational data." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ai-automation-platform.example.com/" />
+    <meta property="og:image" content="https://ai-automation-platform.example.com/og-image.jpg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>AI Automation Platform</title>
+  </head>
+  <body>
+    <div id="initial-loader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#172B36;z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease-out;">
+      <h1 style="color:#FFC801;font-family:'JetBrains Mono', monospace;font-size:2rem;">Loading...</h1>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.addEventListener('load', () => {
+        const loader = document.getElementById('initial-loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 300);
+        }
+      });
+    </script>
+  </body>
+</html>
